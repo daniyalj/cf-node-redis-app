@@ -1,7 +1,6 @@
 ---
 applications:
-- name: starlight
-  memory: 128M
+- memory: 128M
   random-route: true
   env:
     REDIS_ADDRESS: "127.0.0.1"
