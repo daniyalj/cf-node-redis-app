@@ -1,0 +1,8 @@
+---
+applications:
+- name: node-redis-app
+  memory: 128M
+  random-route: true
+  env:
+    REDIS_ADDRESS: "127.0.0.1"
+    REDIS_PASSWORD: "YOUR_PASSWORD_HERE"
