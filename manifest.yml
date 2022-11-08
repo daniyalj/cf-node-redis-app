@@ -1,6 +1,6 @@
 ---
 applications:
-- name: node-redis-app
+- name: redis-app
   memory: 128M
   random-route: true
   env:
