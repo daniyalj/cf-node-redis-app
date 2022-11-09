@@ -5,7 +5,7 @@ move2kube:
     cf-node-redis-app:
       "3000":
         servicetype: Ingress
-        urlpath: foo
+        urlpath: /foo
       containerizationoption:
         - Nodejs-Dockerfile
       enable: true
