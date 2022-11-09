@@ -1,9 +1,9 @@
 move2kube:
   containerruntime: docker
-  minreplicas: "2"
+  minreplicas: "1"
   services:
     cf-node-redis-app:
-      "8080":
+      "3000":
         servicetype: Ingress
         urlpath: foo
       containerizationoption:
@@ -19,7 +19,7 @@ move2kube:
         ingressclassname: ""
         tls: ""
     imageregistry:
-      namespace: myproject
+      namespace: cf-node-redis-app
       quay.io:
         logintype: no authentication
       url: quay.io
