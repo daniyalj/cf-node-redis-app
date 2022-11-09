@@ -1,0 +1,65 @@
+move2kube:
+  containerruntime: docker
+  minreplicas: "2"
+  services:
+    redis-app:
+      "8080":
+        servicetype: Ingress
+        urlpath: /redis-app
+      containerizationoption:
+        - Nodejs-Dockerfile
+      enable: true
+      port: "8080"
+  spawncontainers: false
+  target:
+    default:
+      clustertype: GCP-GKE
+      ingress:
+        host: myproject.com
+        ingressclassname: ""
+        tls: ""
+    imageregistry:
+      namespace: myproject
+      quay.io:
+        logintype: no authentication
+      url: quay.io
+  transformers:
+    types:
+      - ArgoCD
+      - Buildconfig
+      - CNBContainerizer
+      - CloudFoundry
+      - ClusterSelector
+      - ComposeAnalyser
+      - ComposeGenerator
+      - ContainerImagesPushScriptGenerator
+      - DockerfileDetector
+      - DockerfileImageBuildScript
+      - DockerfileParser
+      - DotNetCore-Dockerfile
+      - EarAnalyser
+      - EarRouter
+      - Golang-Dockerfile
+      - Gradle
+      - Jar
+      - Jboss
+      - Knative
+      - Kubernetes
+      - KubernetesVersionChanger
+      - Liberty
+      - Maven
+      - Nodejs-Dockerfile
+      - PHP-Dockerfile
+      - Parameterizer
+      - Python-Dockerfile
+      - ReadMeGenerator
+      - Ruby-Dockerfile
+      - Rust-Dockerfile
+      - Tekton
+      - Tomcat
+      - WarAnalyser
+      - WarRouter
+      - WinConsoleApp-Dockerfile
+      - WinSLWebApp-Dockerfile
+      - WinWebApp-Dockerfile
+      - ZuulAnalyser
