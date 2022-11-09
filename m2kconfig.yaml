@@ -2,10 +2,10 @@ move2kube:
   containerruntime: docker
   minreplicas: "2"
   services:
-    redis-app:
+    cf-node-redis-app:
       "8080":
         servicetype: Ingress
-        urlpath: /redis-app
+        urlpath: /cf-node-redis-app
       containerizationoption:
         - Nodejs-Dockerfile
       enable: true
