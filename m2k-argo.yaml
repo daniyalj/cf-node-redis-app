@@ -1,0 +1,48 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Workflow
+metadata:
+  generateName: move2kube-
+spec:
+  entrypoint: move2kube-example
+  arguments:
+    parameters:
+      - name: repo-name
+        value: "cf-node-redis-app"
+  volumeClaimTemplates:                 # define volume, same syntax as k8s Pod spec
+  - metadata:
+      name: source                     # name of volume claim
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      resources:
+        requests:
+          storage: 1Gi                  # Gi => 1024 * 1024 * 1024
+
+  templates:
+  - name: move2kube-example
+    steps:
+    - - name: clone
+        template: clone
+    - - name: generate-artifacts
+        template: generate-artifacts
+
+  - name: clone
+    container:
+      image: daniyalj/move2kube:v0.4.0
+      command: [sh, -c]
+      args: ["git -c http.sslVerify=false   clone https://github.com/daniyalj/{{workflow.parameters.repo-name}} && ls && pwd"]
+      workingDir: /src
+      # Mount workdir volume at /mnt/vol before invoking docker/whalesay
+      volumeMounts:                     # same syntax as k8s Pod spec
+      - name: source
+        mountPath: /src
+
+  - name: generate-artifacts
+    container:
+      image: daniyalj/move2kube:v0.4.0
+      command: [sh, -c]
+      args: ["move2kube transform --config cf-node-redis-app/m2kconfig.yaml -s cf-node-redis-app --overwrite && ls -la && ls -la myproject/"]
+      workingDir: /src
+      # Mount workdir volume at /mnt/vol before invoking docker/whalesay
+      volumeMounts:                     # same syntax as k8s Pod spec
+      - name: source
+        mountPath: /src%
